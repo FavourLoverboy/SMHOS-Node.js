@@ -13,3 +13,12 @@ module.exports.admin_dashboard = (req, res) => {
         page: admin
     });
 }
+
+module.exports.admin_profile = (req, res) => {
+    res.render(`${pages}/${admin}/profile`, {
+        title: 'Profile Page',
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: admin
+    });
+}

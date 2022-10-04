@@ -9,8 +9,10 @@ const expressLayouts = require('express-ejs-layouts');
 
 
 // import routes
-const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const authRoutes = require('./routes/authRoutes');
+const churchRoutes = require('./routes/churchRoutes');
+const leaderRoutes = require('./routes/leaderRoutes');
 const memberRoutes = require('./routes/memberRoutes');
 
 const app = express();
@@ -43,6 +45,8 @@ app.listen(PORT, () => {
 });
 
 // routes
-app.use(authRoutes);
 app.use(adminRoutes);
+app.use(authRoutes);
+app.use(churchRoutes);
+app.use(leaderRoutes);
 app.use(memberRoutes);
