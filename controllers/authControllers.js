@@ -6,6 +6,8 @@ const db = require('../config/db');
 const initializePassport = require('../config/passport');
 
 const admin = process.env.ADMIN;
+const church = process.env.CHURCH;
+const leader = process.env.LEADER;
 const member = process.env.MEMBER;
 const title = process.env.TITLE;
 

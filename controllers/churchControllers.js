@@ -1,24 +1,24 @@
 require('dotenv').config();
 
 const pages = process.env.PAGES;
-const member = process.env.MEMBER;
+const church = process.env.CHURCH;
 const title = process.env.TITLE;
 
-// member
-module.exports.member_dashboard = (req, res) => {
-    res.render(`${pages}/${member}/Dashboard`, {
+// church
+module.exports.church_dashboard = (req, res) => {
+    res.render(`${pages}/${church}/dashboard`, {
         title: `Dashboard | ${title}`,
         layout: './layout/mainLayout',
         user: req.user,
-        page: member
+        page: church
     });
 }
 
-module.exports.member_profile = (req, res) => {
-    res.render(`${pages}/${member}/profile`, {
+module.exports.church_profile = (req, res) => {
+    res.render(`${pages}/${church}/profile`, {
         title: 'Profile Page',
         layout: './layout/mainLayout',
         user: req.user,
-        page: member
+        page: church
     });
 }
