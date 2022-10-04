@@ -1,0 +1,9 @@
+<!-- Footer -->
+<footer class="sticky-footer bg-white" style="margin-top:2.5rem !important;">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; SMHOS HOME-CELL PORTAL <?php echo date('Y');?></span>
+        </div>
+    </div>
+</footer>
+<!-- End of Footer -->
