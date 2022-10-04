@@ -1,3 +1,3 @@
 # SMHOS-Node.js
-This is a Project am currently working on
-please note that some of the require file are in .gitignore
+This is a Project am currently working on.
+Please note that some of the require file are in .gitignore
