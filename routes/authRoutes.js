@@ -25,6 +25,8 @@ router.post('/', [
     .isLength({ min: 2, max: 5 }).withMessage('Password must be more than 2 characters')
 ], (authController.login_post));
 
+router.post('/logout', (authController.logout));
+
 router.use('*', (authController.page_404));
 
 module.exports = router;
