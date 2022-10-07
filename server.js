@@ -47,7 +47,7 @@ app.listen(PORT, () => {
 
 // routes
 app.use(adminRoutes);
-app.use(authRoutes);
 app.use(churchRoutes);
 app.use(leaderRoutes);
 app.use(memberRoutes);
+app.use(authRoutes);
