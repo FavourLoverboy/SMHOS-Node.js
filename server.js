@@ -20,7 +20,8 @@ const PORT = process.env.PORT || 4000;
 
 // MiddleWare
 app.use(morgan('dev'));
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public/'));
+// app.use(express.static(__dirname + '/public/assets/'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(session({
