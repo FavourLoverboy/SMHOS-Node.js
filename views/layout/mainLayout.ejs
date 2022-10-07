@@ -1,5 +1,13 @@
 <%- include('../partials/header'); -%>
-    
-        <%- body %>
-    
+    <div class="wrapper">
+        <%- include('../partials/sidebar'); -%>
+
+        <div class="main-panel">
+            <%- include('../partials/topnav'); -%>
+            <div class="content">
+                <%- body %>
+            </div>
+            <%- include('../partials/bottomnav'); -%>
+        </div>
+    </div>
 <%- include('../partials/footer'); -%>
