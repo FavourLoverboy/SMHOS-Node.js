@@ -31,6 +31,14 @@ module.exports.login_post = passport.authenticate('local', {
     failureFlash: true
 })
 
+// logout
+module.exports.logout = ((req, res, next) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
+});
+
 // 404 page
 module.exports.page_404 = (req, res) => {
     res.render('auth/404', {
