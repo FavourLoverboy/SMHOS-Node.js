@@ -9,13 +9,15 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="active ">
-                <a href="/<%= page %>/dashboard">
-                    <i class="nc-icon nc-bank"></i>
-                    <p>Dashboard</p>
-                </a>
-            </li>
-            
+            <% if(user.level == 'A') { %>
+                <%- include('levels/admin'); -%>
+            <% }else if(user.level == 'C') { %>
+                <%- include('levels/church'); -%>
+            <% }else if(user.level == 'L') { %>
+                <%- include('levels/leader'); -%>
+            <% }else if(user.level == 'M') { %>
+                <%- include('levels/member'); -%>
+            <% } %>            
         </ul>
     </div>
 </div>
