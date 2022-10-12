@@ -9,7 +9,6 @@ function initialize(passport){
         try{
             const sql = 'SELECT * FROM tbl_login WHERE email = ?';
             const result = await db.promise().query(sql, email);
-            console.log(result[0][0]);
             if(result[0][0].length === 0 ){
                 done(null, false, {
                     message: "No user with that email"
