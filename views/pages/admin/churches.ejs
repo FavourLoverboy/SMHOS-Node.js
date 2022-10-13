@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-3">
+                    <a href="/<%= page %>/add_church">
+                        <button type="button" class="btn btn-info ml-2">Add Church</button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h4 class="card-title">Churches</h4>
+                <% if(success){ %>
+                    <label style="color: green;"><%= success %></label>
+                <% } %>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <th>Name</th>
+                            <th>LGA</th>
+                            <th class="text-right">Country</th>
+                        </thead>
+                        <tbody>
+                            <% if(churches.length > 0){ %>
+                                <% churches.forEach(church => { %>
+                                    <tr>
+                                        <td><%= church.name %></td>
+                                        <td><%= church.lga %></td>
+                                        <td class="text-right"><%= church.country %></td>
+                                    </tr>
+                                <% }) %>
+                            <% } else{ %>
+                                <tr>
+                                    <td colspan="3">There is no Church</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

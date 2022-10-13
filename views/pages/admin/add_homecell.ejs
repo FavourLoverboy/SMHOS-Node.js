@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-user">
+            <div class="card-header">
+                <h5 class="card-title">Add Homecell</h5>
+                
+            </div>
+            <div class="card-body">
+                <form action="/<%= page %>/add_homecell" method="post">
+                    <div class="row">
+                        <div class="col-md-6 pl-3">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <% if(errName){ %>
+                                    <label style="color: red;"><%= errName %></label>
+                                <% } %>
+                                <input type="text" class="form-control" name="name" placeholder="Name" value="<%= name %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pr-3">
+                            <div class="form-group">
+                                <label for="continent">Church</label>
+                                <% if(errChurch){ %>
+                                    <label style="color: red;"><%= errChurch %></label>
+                                <% } %>
+                                <% if(!churches.length > 0){ %>
+                                    <label style="color: cornflowerblue;">No Church Found</label>
+                                <% } %>
+                                <input list="church" name="church" class="form-control" placeholder="Churches" value="<%= church %>" required>
+                                <datalist id="church">
+                                    <% if(churches.length > 0){ %>
+                                        <% churches.forEach(church => { %>
+                                            <option value="<%= church.name %>">
+                                        <% }) %>
+                                    <% } %>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 pl-3">
+                            <div class="form-group">
+                                <label for="adddress">Address</label>
+                                <% if(errAddress){ %>
+                                    <label style="color: red;"><%= errAddress %></label>
+                                <% } %>
+                                <textarea id="address" name="address" class="form-control" placeholder="Address" required><%= address %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="update ml-auto mr-auto">
+                            <button type="submit" class="btn btn-success btn-round">Add Homecell</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
