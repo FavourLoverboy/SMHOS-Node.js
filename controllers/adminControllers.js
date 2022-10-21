@@ -331,6 +331,8 @@ module.exports.add_member_post = async (req, res) => {
             continent: continent,
             username: `${lname}.${fname}`,
             password: hashed,
+            profile: '/assets/profile.png',
+            login: '0',
             homecell_id: home,
         }
         var sql = 'INSERT INTO members SET ?';
