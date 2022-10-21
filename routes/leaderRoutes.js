@@ -85,6 +85,7 @@ router.post(`/${leader}/add_member`, checkLogin.checkAuthenticated, controllingU
         .trim()
         .toLowerCase()
 ], (authController.add_member_post));
+router.get(`/${leader}/view/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.view_member));
 
 
 router.get(`/${leader}/profile`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.leader_profile));
