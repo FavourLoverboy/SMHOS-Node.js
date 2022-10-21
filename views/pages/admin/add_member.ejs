@@ -1,0 +1,174 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-user">
+            <div class="card-header">
+                <h5 class="card-title">Add Member</h5>
+            </div>
+            <div class="card-body">
+                <form action="/<%= page %>/add_member" method="post">
+                    <row class="row">
+                        <div class="col-md-6 pr-1">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <% if(errLastName){ %>
+                                    <label style="color: red;"><%= errLastName %></label>
+                                <% } %>
+                                <input type="text" class="form-control" name="lname" placeholder="enter lastname" value="<%= lname %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-1">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <% if(errFirstName){ %>
+                                    <label style="color: red;"><%= errFirstName %></label>
+                                <% } %>
+                                <input type="text" class="form-control" name="fname" placeholder="enter firstname" value="<%= fname %>" required>
+                            </div>
+                        </div>
+                    </row>
+                    <div class="row">
+                        <div class="col-md-4 pr-1">
+                            <div class="form-group">
+                                <label>Other Name</label>
+                                <input type="text" class="form-control" name="other" placeholder="enter othername" value="<%= other %>">
+                            </div>
+                        </div>
+                        <div class="col-md-4 px-1">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <% if(errEmail){ %>
+                                    <label style="color: red;"><%= errEmail %></label>
+                                <% } %>
+                                <input type="email" class="form-control" name="email" placeholder="enter email" value="<%= email %>">
+                            </div>
+                        </div>
+                        <div class="col-md-4 pl-1">
+                            <div class="form-group">
+                                <label>Number</label>
+                                <input type="tel" class="form-control" name="number" placeholder="enter mobile numner" value="<%= number %>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pr-1">
+                            <div class="form-group">
+                                <label>LGA</label>
+                                <% if(errLGA){ %>
+                                    <label style="color: red;"><%= errLGA %></label>
+                                <% } %>
+                                <input type="text" class="form-control" name="lga" placeholder="enter lga" value="<%= lga %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-1">
+                            <div class="form-group">
+                                <label>State</label>
+                                <% if(errState){ %>
+                                    <label style="color: red;"><%= errState %></label>
+                                <% } %>
+                                <input type="text" class="form-control" name="state" placeholder="enter state" value="<%= state %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pr-1">
+                            <div class="form-group">
+                                <label>Nationality</label>
+                                <% if(errCountry){ %>
+                                    <label style="color: red;"><%= errCountry %></label>
+                                <% } %>
+                                <input type="text" class="form-control" name="country" placeholder="enter country" value="<%= country %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-1">
+                            <div class="form-group">
+                                <label>Continent</label>
+                                <% if(errContinent){ %>
+                                    <label style="color: red;"><%= errContinent %></label>
+                                <% } %>
+                                <input type="text" class="form-control" name="continent" placeholder="enter continent" value="<%= continent %>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 pr-1">
+                            <div class="form-group">
+                                <label>Sex</label>
+                                <% if(errSex){ %>
+                                    <label style="color: red;"><%= errSex %></label>
+                                <% } %>
+                                <input list="sex" class="form-control" name="sex" placeholder="sex" value="<%= sex %>" required>
+                                <datalist id="sex">
+                                    <option value="Male">
+                                    <option value="Female">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-3 px-1">
+                            <div class="form-group">
+                                <label>Marital Status</label>
+                                <% if(errMarital){ %>
+                                    <label style="color: red;"><%= errMarital %></label>
+                                <% } %>
+                                <input list="marital-status" class="form-control" name="marital_status" placeholder="marital status" value="<%= marital_status %>" required>
+                                <datalist id="marital-status">
+                                    <option value="Divorced">
+                                    <option value="Married">
+                                    <option value="Registered Partnership">
+                                    <option value="Separated">
+                                    <option value="Single">
+                                    <option value="Widowed">
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-3 px-1">
+                            <div class="form-group">
+                                <label>DOB</label>
+                                <% if(errDOB){ %>
+                                    <label style="color: red;"><%= errDOB %></label>
+                                <% } %>
+                                <input type="date" class="form-control" name="dob" value="<%= dob %>" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-1">
+                            <div class="form-group">
+                                <label>Baptise</label>
+                                <input type="date" class="form-control" name="baptise" value="<%= baptise %>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <% if(errAddress){ %>
+                                    <label style="color: red;"><%= errAddress %></label>
+                                <% } %>
+                                <textarea class="form-control textarea" name="address" required><%= address %></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <% if(!homecells.length > 0){ %>
+                                    <label style="color: cornflowerblue;">No Homecell Found</label>
+                                <% } %>
+                                <input list="homecell" class="form-control" name="homecell" placeholder="Homecell" value="<%= homecell %>">
+                                <datalist id="homecell">
+                                    <% if(homecells.length > 0){ %>
+                                        <% homecells.forEach(homecell => { %>
+                                            <option value="<%= homecell.name %>">
+                                        <% }) %>
+                                    <% } %>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="update ml-auto mr-auto">
+                            <button type="submit" class="btn btn-primary btn-round">add member</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
