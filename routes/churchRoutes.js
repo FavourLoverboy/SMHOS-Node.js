@@ -34,6 +34,7 @@ router.post(`/${church}/add_homecell`, checkLogin.checkAuthenticated, controllin
         .bail()
         .toLowerCase()
 ], (authController.add_homecell_post));
+router.get(`/${church}/view_homecell/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.view_homecell));
 
 router.get(`/${church}/profile`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.church_profile));
 

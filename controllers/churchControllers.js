@@ -31,6 +31,27 @@ module.exports.homecell = async (req, res) => {
         homecells: result[0]
     });
 }
+module.exports.view_homecell = async (req, res) => {
+    let id = req.params.id;
+
+    let sql = 'SELECT * FROM homecells WHERE id = ?';
+    const homecells = await db.promise().query(sql, id);
+
+    let sql2 = 'SELECT * FROM members WHERE homecell_id = ? ORDER BY date DESC LIMIT 5';
+    const members = await db.promise().query(sql2, id);
+
+    var count_member = members[0].length;
+
+    res.render(`${pages}/${churchRoute}/view_homecell`, {
+        title: `Homecell | ${title}`, 
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: churchRoute,
+        members: members[0],
+        homecells: homecells[0][0],
+        count_member: count_member,
+    });
+}
 module.exports.add_homecell = async (req, res) => {
     let sql = 'SELECT name FROM churches WHERE id = ? ORDER BY name';
     let church_id = req.user.church_id;
