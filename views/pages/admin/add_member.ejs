@@ -146,8 +146,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6 pr-1">
                             <div class="form-group">
+                                <label>Homecell</label>
                                 <% if(!homecells.length > 0){ %>
                                     <label style="color: cornflowerblue;">No Homecell Found</label>
                                 <% } %>
@@ -156,6 +157,22 @@
                                     <% if(homecells.length > 0){ %>
                                         <% homecells.forEach(homecell => { %>
                                             <option value="<%= homecell.name %>">
+                                        <% }) %>
+                                    <% } %>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-1">
+                            <div class="form-group">
+                                <label>Church</label>
+                                <% if(!churches.length > 0){ %>
+                                    <label style="color: cornflowerblue;">No Church Found</label>
+                                <% } %>
+                                <input list="church" class="form-control" name="church" placeholder="Church" value="<%= church %>">
+                                <datalist id="church">
+                                    <% if(churches.length > 0){ %>
+                                        <% churches.forEach(church => { %>
+                                            <option value="<%= church.name %>">
                                         <% }) %>
                                     <% } %>
                                 </datalist>

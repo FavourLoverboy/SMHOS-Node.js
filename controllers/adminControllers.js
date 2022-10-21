@@ -177,6 +177,32 @@ module.exports.add_homecell_post = async (req, res) => {
         console.log(e);
     }
 }
+module.exports.view_church = async (req, res) => {
+    let id = req.params.id;
+    let sql = 'SELECT * FROM churches WHERE id = ?';
+    const churches = await db.promise().query(sql, id);
+
+    let sql2 = 'SELECT * FROM homecells WHERE church_id = ? ORDER BY date DESC LIMIT 5';
+    const homecells = await db.promise().query(sql2, id);
+
+    let sql3 = 'SELECT * FROM members WHERE church_id = ? ORDER BY date DESC LIMIT 5';
+    const members = await db.promise().query(sql3, id);
+
+    var count_member = members[0].length;
+    var count_homecell = homecells[0].length;
+
+    res.render(`${pages}/${admin}/view_church`, {
+        title: `Members | ${title}`, 
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: admin,
+        members: members[0],
+        homecells: homecells[0],
+        churches: churches[0][0],
+        count_member: count_member,
+        count_homecell: count_homecell
+    });
+}
 
 // member
 module.exports.member = async (req, res) => {
@@ -193,7 +219,11 @@ module.exports.member = async (req, res) => {
 }
 module.exports.add_member = async (req, res) => {
     let sql = 'SELECT name FROM homecells ORDER BY name';
-    const result = await db.promise().query(sql);
+    const homecells = await db.promise().query(sql);
+
+    let sql2 = 'SELECT name FROM homecells ORDER BY name';
+    const churches = await db.promise().query(sql2);
+
     res.render(`${pages}/${admin}/add_member`, {
         title: `Add Homecell | ${title}`, 
         layout: './layout/mainLayout',
@@ -214,6 +244,7 @@ module.exports.add_member = async (req, res) => {
         dob: req.body.dob,
         address: req.body.address,
         homecell: req.body.homecell,
+        church: req.body.church,
         errLastName: req.flash('errLastName'),
         errFirstName: req.flash('errFirstName'),
         errEmail: req.flash('errEmail'),
@@ -225,7 +256,8 @@ module.exports.add_member = async (req, res) => {
         errMarital: req.flash('errMarital'),
         errDOB: req.flash('errDOB'),
         errAddress: req.flash('errAddress'),
-        homecells: result[0]
+        homecells: homecells[0],
+        churches: churches[0]
     });
 }
 module.exports.add_member_post = async (req, res) => {
@@ -264,8 +296,12 @@ module.exports.add_member_post = async (req, res) => {
                 req.flash('errAddress', error.msg);
             }
         });
+
         let sql = 'SELECT name FROM homecells ORDER BY name';
-        const result = await db.promise().query(sql);
+        const homecells = await db.promise().query(sql);
+
+        let sql2 = 'SELECT name FROM homecells ORDER BY name';
+        const churches = await db.promise().query(sql2);
         res.render(`${pages}/${admin}/add_member`, {
             title: `Add Homecell | ${title}`, 
             layout: './layout/mainLayout',
@@ -286,6 +322,7 @@ module.exports.add_member_post = async (req, res) => {
             dob: req.body.dob,
             address: req.body.address,
             homecell: req.body.homecell,
+            church: req.body.church,
             errLastName: req.flash('errLastName'),
             errFirstName: req.flash('errFirstName'),
             errEmail: req.flash('errEmail'),
@@ -297,13 +334,14 @@ module.exports.add_member_post = async (req, res) => {
             errMarital: req.flash('errMarital'),
             errDOB: req.flash('errDOB'),
             errAddress: req.flash('errAddress'),
-            homecells: result[0]
+            homecells: homecells[0],
+            churches: churches[0]
         });
         return;
     }
     
     try{
-        var { lname, fname, other, email, number, lga, state, country, continent, sex, marital_status, dob, baptise, address, homecell } = req.body;
+        var { lname, fname, other, email, number, lga, state, country, continent, sex, marital_status, dob, baptise, address, homecell, church } = req.body;
         const hashed = await bcrypt.hash('123', 10);
         if(homecell){
             var sql = 'SELECT id FROM homecells WHERE name = ?';
@@ -311,6 +349,14 @@ module.exports.add_member_post = async (req, res) => {
             var home = result[0][0].id;
         }else{
             var home = '';
+        }
+
+        if(church){
+            var sql = 'SELECT id FROM churches WHERE name = ?';
+            var result = await db.promise().query(sql, church);
+            var church = result[0][0].id;
+        }else{
+            var church = '';
         }
         
         var values = {
@@ -333,6 +379,7 @@ module.exports.add_member_post = async (req, res) => {
             profile: '/assets/profile.png',
             login: '0',
             homecell_id: home,
+            church_id: church
         }
         var sql = 'INSERT INTO members SET ?';
         var result = await db.promise().query(sql, values);
@@ -347,13 +394,22 @@ module.exports.view_member = async (req, res) => {
     let sql = 'SELECT * FROM members WHERE id = ?';
     const result = await db.promise().query(sql, id);
 
-    let homecell_id = result[0][0].id;
-    let sql2 = 'SELECT church_id, name FROM homecells WHERE id = ?';
-    const result2 = await db.promise().query(sql2, homecell_id);
+    let homecell_id = result[0][0].homecell_id;
+    let church_id = result[0][0].church_id;
+    var result2 = '';
+    var result3 = '';
 
-    let church_id = result2[0][0].church_id;
-    let sql3 = 'SELECT name FROM churches WHERE id = ?';
-    const result3 = await db.promise().query(sql3, church_id);
+    if(homecell_id != 0){
+        let sql2 = 'SELECT name FROM homecells WHERE id = ?';
+        var result2 = await db.promise().query(sql2, homecell_id);
+        result2 = result2[0][0];
+    }
+    if(church_id != 0){
+        let sql3 = 'SELECT name FROM churches WHERE id = ?';
+        var result3 = await db.promise().query(sql3, church_id);
+        result3 = result3[0][0];
+    }
+
 
     res.render(`${pages}/${admin}/view`, {
         title: `Members | ${title}`, 
@@ -361,8 +417,8 @@ module.exports.view_member = async (req, res) => {
         user: req.user,
         page: admin,
         members: result[0][0],
-        homecell: result2[0][0],
-        church: result3[0][0]
+        homecell: result2,
+        church: result3
     });
 }
 

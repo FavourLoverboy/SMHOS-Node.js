@@ -49,6 +49,7 @@ router.post(`/${admin}/add_church`, checkLogin.checkAuthenticated, controllingUs
             }
         })
 ], (authController.add_church_post));
+router.get(`/${admin}/view_church/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.view_church));
 
 // homecell
 router.get(`/${admin}/homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.homecell));
@@ -147,6 +148,9 @@ router.post(`/${admin}/add_member`, checkLogin.checkAuthenticated, controllingUs
         .bail()
         .toLowerCase(),
     body('homecell')
+        .trim()
+        .toLowerCase(),
+    body('church')
         .trim()
         .toLowerCase()
 ], (authController.add_member_post));

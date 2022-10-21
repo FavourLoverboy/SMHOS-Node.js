@@ -21,7 +21,8 @@
                         <thead class=" text-primary">
                             <th>Name</th>
                             <th>LGA</th>
-                            <th class="text-right">Country</th>
+                            <th>Country</th>
+                            <th class="text-right">View</th>
                         </thead>
                         <tbody>
                             <% if(churches.length > 0){ %>
@@ -29,7 +30,10 @@
                                     <tr>
                                         <td><%= church.name %></td>
                                         <td><%= church.lga %></td>
-                                        <td class="text-right"><%= church.country %></td>
+                                        <td><%= church.country %></td>
+                                        <td class="text-right">
+                                            <a href="/<%= page %>/view_church/<%= church.id %>" class="btn btn-info btn-sm">view</a>
+                                        </td>
                                     </tr>
                                 <% }) %>
                             <% } else{ %>
