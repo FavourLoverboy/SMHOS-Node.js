@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-3">
+                    <a href="/<%= page %>/add_member">
+                        <button type="button" class="btn btn-info ml-2">Add Member</button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h4 class="card-title">Members</h4>
+                <% if(success){ %>
+                    <label style="color: green;"><%= success %></label>
+                <% } %>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Sex</th>
+                            <th>Number</th>
+                            <th class="text-right">Marital Status</th>
+                        </thead>
+                        <tbody>
+                            <% if(members.length > 0){ %>
+                                <% members.forEach(member => { %>
+                                    <tr>
+                                        <td><%= member.last_name + ' ' + member.first_name + ' ' + member.other_name%></td>
+                                        <td><%= member.email %></td>
+                                        <td><%= member.sex %></td>
+                                        <td><%= member.number %></td>
+                                        <td class="text-right"><%= member.marital_status %></td>
+                                    </tr>
+                                <% }) %>
+                            <% } else{ %>
+                                <tr>
+                                    <td colspan="3">There is no Member</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
