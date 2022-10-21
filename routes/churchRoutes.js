@@ -110,6 +110,7 @@ router.post(`/${church}/add_member`, checkLogin.checkAuthenticated, controllingU
         .trim()
         .toLowerCase()
 ], (authController.add_member_post));
+router.get(`/${church}/view/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.view_member));
 
 router.get(`/${church}/profile`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.church_profile));
 
