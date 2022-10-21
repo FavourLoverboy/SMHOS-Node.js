@@ -20,14 +20,18 @@
                     <table class="table">
                         <thead class=" text-primary">
                             <th>Name</th>
-                            <th class="text-right">Date</th>
+                            <th>Address</th>
+                            <th class="text-right">View</th>
                         </thead>
                         <tbody>
                             <% if(homecells.length > 0){ %>
                                 <% homecells.forEach(homecell => { %>
                                     <tr>
                                         <td><%= homecell.name %></td>
-                                        <td class="text-right"><%= homecell.date %></td>
+                                        <td><%= homecell.address %></td>
+                                        <td class="text-right">
+                                            <a href="/<%= page %>/view_homecell/<%= homecell.id %>" class="btn btn-info btn-sm">view</a>
+                                        </td>
                                     </tr>
                                 <% }) %>
                             <% } else{ %>

@@ -78,6 +78,7 @@ router.post(`/${admin}/add_homecell`, checkLogin.checkAuthenticated, controlling
         .bail()
         .toLowerCase()
 ], (authController.add_homecell_post));
+router.get(`/${admin}/view_homecell/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.view_homecell));
 
 router.get(`/${admin}/profile`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.admin_profile));
 

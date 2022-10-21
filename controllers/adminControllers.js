@@ -29,6 +29,32 @@ module.exports.church = async (req, res) => {
         churches: result[0]
     });
 }
+module.exports.view_church = async (req, res) => {
+    let id = req.params.id;
+    let sql = 'SELECT * FROM churches WHERE id = ?';
+    const churches = await db.promise().query(sql, id);
+
+    let sql2 = 'SELECT * FROM homecells WHERE church_id = ? ORDER BY date DESC LIMIT 5';
+    const homecells = await db.promise().query(sql2, id);
+
+    let sql3 = 'SELECT * FROM members WHERE church_id = ? ORDER BY date DESC LIMIT 5';
+    const members = await db.promise().query(sql3, id);
+
+    var count_member = members[0].length;
+    var count_homecell = homecells[0].length;
+
+    res.render(`${pages}/${admin}/view_church`, {
+        title: `Members | ${title}`, 
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: admin,
+        members: members[0],
+        homecells: homecells[0],
+        churches: churches[0][0],
+        count_member: count_member,
+        count_homecell: count_homecell
+    });
+}
 module.exports.add_church = (req, res) => {
     res.render(`${pages}/${admin}/add_church`, {
         title: `Add Church | ${title}`, 
@@ -102,7 +128,7 @@ module.exports.add_church_post = async (req, res) => {
 
 // homecell
 module.exports.homecell = async (req, res) => {
-    let sql = 'SELECT churches.name, homecells.name, homecells.date FROM churches INNER JOIN homecells ON churches.id = homecells.church_id ORDER BY homecells.name';
+    let sql = 'SELECT * FROM homecells ORDER BY name';
     const result = await db.promise().query(sql);
     res.render(`${pages}/${admin}/homecells`, {
         title: `Homecells | ${title}`, 
@@ -111,6 +137,27 @@ module.exports.homecell = async (req, res) => {
         page: admin,
         success: req.flash('success'),
         homecells: result[0]
+    });
+}
+module.exports.view_homecell = async (req, res) => {
+    let id = req.params.id;
+
+    let sql = 'SELECT * FROM homecells WHERE id = ?';
+    const homecells = await db.promise().query(sql, id);
+
+    let sql2 = 'SELECT * FROM members WHERE homecell_id = ? ORDER BY date DESC LIMIT 5';
+    const members = await db.promise().query(sql2, id);
+
+    var count_member = members[0].length;
+
+    res.render(`${pages}/${admin}/view_homecell`, {
+        title: `Homecell | ${title}`, 
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: admin,
+        members: members[0],
+        homecells: homecells[0][0],
+        count_member: count_member,
     });
 }
 module.exports.add_homecell = async (req, res) => {
@@ -176,32 +223,6 @@ module.exports.add_homecell_post = async (req, res) => {
     } catch(e) {
         console.log(e);
     }
-}
-module.exports.view_church = async (req, res) => {
-    let id = req.params.id;
-    let sql = 'SELECT * FROM churches WHERE id = ?';
-    const churches = await db.promise().query(sql, id);
-
-    let sql2 = 'SELECT * FROM homecells WHERE church_id = ? ORDER BY date DESC LIMIT 5';
-    const homecells = await db.promise().query(sql2, id);
-
-    let sql3 = 'SELECT * FROM members WHERE church_id = ? ORDER BY date DESC LIMIT 5';
-    const members = await db.promise().query(sql3, id);
-
-    var count_member = members[0].length;
-    var count_homecell = homecells[0].length;
-
-    res.render(`${pages}/${admin}/view_church`, {
-        title: `Members | ${title}`, 
-        layout: './layout/mainLayout',
-        user: req.user,
-        page: admin,
-        members: members[0],
-        homecells: homecells[0],
-        churches: churches[0][0],
-        count_member: count_member,
-        count_homecell: count_homecell
-    });
 }
 
 // member
