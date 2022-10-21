@@ -130,6 +130,38 @@ module.exports.member = async (req, res) => {
         members: result[0]
     });
 }
+module.exports.view_member = async (req, res) => {
+    let id = req.params.id;
+    let sql = 'SELECT * FROM members WHERE id = ?';
+    const result = await db.promise().query(sql, id);
+
+    let homecell_id = result[0][0].homecell_id;
+    let church_id = result[0][0].church_id;
+    var result2 = '';
+    var result3 = '';
+
+    if(homecell_id != 0){
+        let sql2 = 'SELECT name FROM homecells WHERE id = ?';
+        var result2 = await db.promise().query(sql2, homecell_id);
+        result2 = result2[0][0];
+    }
+    if(church_id != 0){
+        let sql3 = 'SELECT name FROM churches WHERE id = ?';
+        var result3 = await db.promise().query(sql3, church_id);
+        result3 = result3[0][0];
+    }
+
+
+    res.render(`${pages}/${churchRoute}/view`, {
+        title: `Members | ${title}`, 
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: churchRoute,
+        members: result[0][0],
+        homecell: result2,
+        church: result3
+    });
+}
 module.exports.add_member = async (req, res) => {
     let sql = 'SELECT name FROM homecells ORDER BY name';
     const homecells = await db.promise().query(sql);
