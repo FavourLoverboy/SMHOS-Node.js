@@ -182,7 +182,6 @@ module.exports.add_homecell_post = async (req, res) => {
 module.exports.member = async (req, res) => {
     let sql = 'SELECT * FROM members ORDER BY last_name';
     const result = await db.promise().query(sql);
-    console.log(result);
     res.render(`${pages}/${admin}/members`, {
         title: `Members | ${title}`, 
         layout: './layout/mainLayout',
@@ -342,6 +341,29 @@ module.exports.add_member_post = async (req, res) => {
     } catch(e) {
         console.log(e);
     }
+}
+module.exports.view_member = async (req, res) => {
+    let id = req.params.id;
+    let sql = 'SELECT * FROM members WHERE id = ?';
+    const result = await db.promise().query(sql, id);
+
+    let homecell_id = result[0][0].id;
+    let sql2 = 'SELECT church_id, name FROM homecells WHERE id = ?';
+    const result2 = await db.promise().query(sql2, homecell_id);
+
+    let church_id = result2[0][0].church_id;
+    let sql3 = 'SELECT name FROM churches WHERE id = ?';
+    const result3 = await db.promise().query(sql3, church_id);
+
+    res.render(`${pages}/${admin}/view`, {
+        title: `Members | ${title}`, 
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: admin,
+        members: result[0][0],
+        homecell: result2[0][0],
+        church: result3[0][0]
+    });
 }
 
 

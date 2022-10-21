@@ -150,5 +150,6 @@ router.post(`/${admin}/add_member`, checkLogin.checkAuthenticated, controllingUs
         .trim()
         .toLowerCase()
 ], (authController.add_member_post));
+router.get(`/${admin}/view/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.view_member));
 
 module.exports = router;

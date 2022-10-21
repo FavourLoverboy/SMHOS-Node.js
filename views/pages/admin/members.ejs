@@ -23,7 +23,8 @@
                             <th>Email</th>
                             <th>Sex</th>
                             <th>Number</th>
-                            <th class="text-right">Marital Status</th>
+                            <th>Marital Status</th>
+                            <th class="text-right">View</th>
                         </thead>
                         <tbody>
                             <% if(members.length > 0){ %>
@@ -33,7 +34,10 @@
                                         <td><%= member.email %></td>
                                         <td><%= member.sex %></td>
                                         <td><%= member.number %></td>
-                                        <td class="text-right"><%= member.marital_status %></td>
+                                        <td><%= member.marital_status %></td>
+                                        <td class="text-right">
+                                            <a href="/<%= page %>/view/<%= member.id %>" class="btn btn-success btn-sm">view</a>
+                                        </td>
                                     </tr>
                                 <% }) %>
                             <% } else{ %>
