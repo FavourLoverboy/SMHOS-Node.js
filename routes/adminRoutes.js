@@ -26,6 +26,14 @@ router.post(`/${admin}/add_church_leader`, checkLogin.checkAuthenticated, contro
         .toLowerCase()
 ], (authController.add_church_leader_post));
 
+router.post(`/${admin}/remove_church_leader/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
+    body('reason')
+        .trim()
+        .notEmpty().withMessage('Reason can\'t be empty')
+        .bail()
+        .toLowerCase()
+], (authController.remove_church_leader_post));
+
 router.post(`/${admin}/add_church`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
     body('continent')
         .trim()

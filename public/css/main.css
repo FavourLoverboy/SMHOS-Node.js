@@ -4195,3 +4195,45 @@
   
   /*# sourceMappingURL=paper-dashboard.css.map */
   
+
+  /* MY STYLES */
+.popup-main{
+  background: rgba(0, 0, 0, .5);
+  display: none;
+  height: 100vh;
+  position: fixed;
+  left:0;
+  top: 0;
+  width: 100vw;
+}
+.popup-main.active{
+  display: block;
+}
+.popup-main .main-box{
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+}
+.popup-main .main-box .head{
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    color: #F8F9FA;
+    height: 50px;
+    position: relative;
+}
+.popup-main .main-box .head h3{
+    line-height: 50px;
+}
+.popup-main .main-box .head .close{
+    color: #F8F9FA;
+    cursor:pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.popup-main .main-box .bottom{
+    color: #F8F9FA;
+}
