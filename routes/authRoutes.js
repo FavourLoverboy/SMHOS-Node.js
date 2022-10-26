@@ -27,6 +27,6 @@ router.post('/', [
 
 router.post('/logout', (authController.logout));
 
-router.use('*', (authController.page_404));
+// router.use('*', (authController.page_404));
 
 module.exports = router;

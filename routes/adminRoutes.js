@@ -16,6 +16,16 @@ router.get(`/${admin}/dashboard`, checkLogin.checkAuthenticated, controllingUser
 router.get(`/${admin}/church`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.church));
 
 router.get(`/${admin}/add_church`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.add_church));
+
+router.get(`/${admin}/add_church_leader/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.add_church_leader));
+router.post(`/${admin}/add_church_leader`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
+    body('email')
+        .trim()
+        .notEmpty().withMessage('Email can\'t be empty')
+        .bail()
+        .toLowerCase()
+], (authController.add_church_leader_post));
+
 router.post(`/${admin}/add_church`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
     body('continent')
         .trim()

@@ -40,12 +40,12 @@ module.exports.logout = ((req, res, next) => {
 });
 
 // 404 page
-module.exports.page_404 = (req, res) => {
-    res.render('auth/404', {
-        title: `404 | ${title}`,
-        layout: './layout/loginLayout',
-    })
-} 
+// module.exports.page_404 = (req, res) => {
+//     res.render('auth/404', {
+//         title: `404 | ${title}`,
+//         layout: './layout/loginLayout',
+//     })
+// } 
 
 // check user rank (level)
 module.exports.check = (req, res) => {

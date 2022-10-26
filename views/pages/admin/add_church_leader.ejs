@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-user">
+            <div class="card-header">
+                <h5 class="card-title">Assign Church Leader</h5>
+            </div>
+            <div class="card-body">
+                <form action="/<%= page %>/add_church_leader" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="hidden" name="church_id" value="<%= member_church_id %>">
+                                
+                                <label>Members <%= members['name'] %> </label>
+                                <% if(!members.length > 0){ %>
+                                    <label style="color: cornflowerblue;">No Member</label>
+                                <% } %>
+                                <% if(errEmail){ %>
+                                    <label style="color: red;"><%= errEmail %></label>
+                                <% } %>
+                                <% if(sucmsg){ %>
+                                    <label style="color: green;"><%= sucmsg %></label>
+                                <% } %>
+                                <% if(errmsg){ %>
+                                    <label style="color: red;"><%= errmsg %></label>
+                                <% } %>
+                                <input list="members" class="form-control" name="email" placeholder="Email" value="<%=  %>">
+                                <datalist id="members">
+                                    <% if(members.length > 0){ %>
+                                        <% members.forEach(member => { %>
+                                            <option value="<%= member.email %>">
+                                        <% }) %>
+                                    <% } %>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="update ml-auto mr-auto">
+                            <button type="submit" class="btn btn-primary btn-round">assign</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Church Leaders</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Date</th>
+                                <th class="text-right">View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(church_leaders.length > 0){ %>
+                                <% church_leaders.forEach(leader => { %>
+                                    <tr>
+                                        <td><%= leader.last_name %> <%= leader.first_name %></td>
+                                        <td><%= leader.email %></td>
+                                        <td><%= leader.date %></td>
+                                        <td class="text-right">
+                                            <a href="/<%= page %>/view/<%= leader.id %>" class="btn btn-success btn-sm">view</a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else{ %>
+                                <tr>
+                                    <td colspan="4">There is no Leader for this church</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
