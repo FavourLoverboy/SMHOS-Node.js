@@ -18,8 +18,10 @@ module.exports.admin_dashboard = (req, res) => {
 }
 // church
 module.exports.church = async (req, res) => {
-    let sql = 'SELECT * FROM churches ORDER BY name';
+    let sql = 'SELECT churches.id, churches.name, churches.lga, churches.country, COUNT(homecells.church_id) AS homecells FROM churches INNER JOIN homecells ON churches.id = homecells.church_id GROUP BY homecells.church_id';
     const result = await db.promise().query(sql);
+
+
     res.render(`${pages}/${admin}/churches`, {
         title: `Churches | ${title}`, 
         layout: './layout/mainLayout',
@@ -189,6 +191,7 @@ module.exports.add_church_leader_post = async (req, res) => {
         const members = await db.promise().query(sql3, email);
         
         const details = members[0][0];
+        console.log(details);
 
         const values = {
             user_id: details.id,
@@ -199,8 +202,16 @@ module.exports.add_church_leader_post = async (req, res) => {
         }
         let sql4 = `SELECT * FROM tbl_leaders WHERE user_id = ${details.id} AND lead_id = ${details.church_id} AND type = 'C' AND status = '1'`;
         const check = await db.promise().query(sql4);
+
+        let sql5 = 'SELECT * FROM tbl_login WHERE email = ?';
+        const check2 = await db.promise().query(sql5, details.email);
+
+
         if(check[0][0]){
             req.flash('errmsg', 'member has already been selected');
+            res.redirect(`/${admin}/add_church_leader/${church_id}`);
+        }else if(check2[0][0]){
+            req.flash('errmsg', 'member already a homecell leader');
             res.redirect(`/${admin}/add_church_leader/${church_id}`);
         }else{
             let sql = 'INSERT INTO tbl_leaders SET ?';
@@ -279,7 +290,8 @@ module.exports.add_church_post = async (req, res) => {
 
 // homecell
 module.exports.homecell = async (req, res) => {
-    let sql = 'SELECT * FROM homecells ORDER BY name';
+    // let sql = 'SELECT * FROM homecells ORDER BY name';
+    let sql = 'SELECT homecells.id, homecells.name, homecells.address, COUNT(members.homecell_id) AS members FROM homecells INNER JOIN members ON homecells.id = members.homecell_id GROUP BY members.homecell_id';
     const result = await db.promise().query(sql);
     res.render(`${pages}/${admin}/homecells`, {
         title: `Homecells | ${title}`, 
@@ -457,8 +469,15 @@ module.exports.add_homecell_leader_post = async (req, res) => {
         }
         let sql4 = `SELECT * FROM tbl_leaders WHERE user_id = ${details.id} AND lead_id = ${details.homecell_id} AND type = 'H' AND status = '1'`;
         const check = await db.promise().query(sql4);
+
+        let sql5 = 'SELECT * FROM tbl_login WHERE email = ?';
+        const check2 = await db.promise().query(sql5, details.email);
+
         if(check[0][0]){
             req.flash('errmsg', 'member has already been selected');
+            res.redirect(`/${admin}/add_homecell_leader/${homecell_id}`);
+        }else if(check2[0][0]){
+            req.flash('errmsg', 'member already a church leader');
             res.redirect(`/${admin}/add_homecell_leader/${homecell_id}`);
         }else{
             let sql = 'INSERT INTO tbl_leaders SET ?';

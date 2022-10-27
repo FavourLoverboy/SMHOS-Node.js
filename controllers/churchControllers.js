@@ -19,7 +19,8 @@ module.exports.church_dashboard = (req, res) => {
 
 // homecell
 module.exports.homecell = async (req, res) => {
-    let sql = 'SELECT * FROM homecells WHERE church_id = ? ORDER BY name';
+    // let sql = 'SELECT * FROM homecells WHERE church_id = ? ORDER BY name';
+    let sql = 'SELECT homecells.id, homecells.name, homecells.address, COUNT(members.homecell_id) AS members FROM homecells INNER JOIN members ON homecells.id = members.homecell_id WHERE homecells.church_id = ? GROUP BY members.homecell_id';
     let church_id = req.user.church_id;
     const result = await db.promise().query(sql, church_id);
     res.render(`${pages}/${churchRoute}/homecells`, {
@@ -200,8 +201,16 @@ module.exports.add_homecell_leader_post = async (req, res) => {
         }
         let sql4 = `SELECT * FROM tbl_leaders WHERE user_id = ${details.id} AND lead_id = ${details.homecell_id} AND type = 'H' AND status = '1'`;
         const check = await db.promise().query(sql4);
+
+        let sql5 = 'SELECT * FROM tbl_login WHERE email = ?';
+        const check2 = await db.promise().query(sql5, details.email);
+
+
         if(check[0][0]){
             req.flash('errmsg', 'member has already been selected');
+            res.redirect(`/${churchRoute}/add_homecell_leader/${homecell_id}`);
+        }else if(check2[0][0]){
+            req.flash('errmsg', 'member already a church leader');
             res.redirect(`/${churchRoute}/add_homecell_leader/${homecell_id}`);
         }else{
             let sql = 'INSERT INTO tbl_leaders SET ?';
@@ -306,6 +315,7 @@ module.exports.view_member = async (req, res) => {
         let sql4 = "SELECT members.last_name, members.first_name FROM members INNER JOIN tbl_leaders ON members.id = tbl_leaders.user_id WHERE tbl_leaders.lead_id = ? AND tbl_leaders.type = 'H' AND tbl_leaders.status = '1' LIMIT 1";
         const leader = await db.promise().query(sql4, homecell_id);
         homecell_leader = leader[0][0];
+        console.log(homecell_leader);
     }
     if(church_id != 0){
         let sql3 = 'SELECT name FROM churches WHERE id = ?';

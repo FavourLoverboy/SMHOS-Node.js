@@ -21,6 +21,7 @@
                         <thead class=" text-primary">
                             <th>Name</th>
                             <th>Address</th>
+                            <th>Members</th>
                             <th class="text-right">View</th>
                         </thead>
                         <tbody>
@@ -29,6 +30,7 @@
                                     <tr>
                                         <td><%= homecell.name %></td>
                                         <td><%= homecell.address %></td>
+                                        <td><%= homecell.members %></td>
                                         <td class="text-right">
                                             <a href="/<%= page %>/view_homecell/<%= homecell.id %>" class="btn btn-info btn-sm">view</a>
                                         </td>
