@@ -16,18 +16,29 @@
             </div>
             <div class="card-footer">
                 <hr>
+                <% if(homecell_leader){ %>
+                    <% 
+                        var name = members.last_name + ' ' + members.first_name; 
+                        var leader_name = homecell_leader.last_name + ' ' + homecell_leader.first_name;
+                    %>
+                    <% if (name == leader_name) { %>
+                        <h5 class="text-center bg-primary text-white p-2">Homecell Leader</h5>
+                    <% } %>
+                <% } %>
+                
                 <div class="button-container">
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-6 ml-auto">
                             <!-- <h5>12<br><small>Files</small></h5> -->
                         </div>
                         <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                            <!-- <h5>2GB<br><small>Used</small></h5> -->
+                            <!-- <h5>Leader</h5> -->
                         </div>
-                    <div class="col-lg-3 mr-auto">
-                        <!-- <h5>24,6$<br><small>Spent</small></h5> -->
+                        <div class="col-lg-3 mr-auto">
+                            <!-- <h5>24,6$<br><small>Spent</small></h5> -->
+                        </div>
                     </div>
-                </div>
+                <!-- </div>    -->
             </div>
         </div>
     </div>
