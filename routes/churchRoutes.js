@@ -16,6 +16,9 @@ router.get(`/${church}/dashboard`, checkLogin.checkAuthenticated, controllingUse
 router.get(`/${church}/homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.homecell));
 
 router.get(`/${church}/add_homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.add_homecell));
+
+router.get(`/${church}/add_homecell_leader/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.add_homecell_leader));
+
 router.post(`/${church}/add_homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
     body('name')
         .trim()

@@ -40,6 +40,9 @@ module.exports.view_homecell = async (req, res) => {
     let sql2 = 'SELECT * FROM members WHERE homecell_id = ? ORDER BY date DESC LIMIT 5';
     const members = await db.promise().query(sql2, id);
 
+    let sql3 = "SELECT members.id, members.last_name, members.first_name, members.email, tbl_leaders.date FROM members INNER JOIN tbl_leaders ON members.id = tbl_leaders.user_id WHERE tbl_leaders.lead_id = ? AND status = '1'";
+    const homecell_leaders = await db.promise().query(sql3, id);
+
     var count_member = members[0].length;
 
     res.render(`${pages}/${churchRoute}/view_homecell`, {
@@ -50,6 +53,7 @@ module.exports.view_homecell = async (req, res) => {
         members: members[0],
         homecells: homecells[0][0],
         count_member: count_member,
+        homecell_leaders: homecell_leaders[0]
     });
 }
 module.exports.add_homecell = async (req, res) => {
@@ -69,6 +73,32 @@ module.exports.add_homecell = async (req, res) => {
         churches: result[0][0]
     });
 }
+
+module.exports.add_homecell_leader = async (req, res) => {
+    let id = req.params.id;
+
+    let sql = "SELECT members.id, members.last_name, members.first_name, members.email, tbl_leaders.date FROM members INNER JOIN tbl_leaders ON members.id = tbl_leaders.user_id WHERE tbl_leaders.lead_id = ? AND status = '1'";
+    const homecell_leaders = await db.promise().query(sql, id);
+
+    let sql3 = "SELECT * FROM members WHERE email != '' AND homecell_id = ? ORDER BY last_name";
+    const members = await db.promise().query(sql3, id);
+    
+    res.render(`${pages}/${churchRoute}/add_homecell_leader`, {
+        title: `Assign Homecell Leader | ${title}`, 
+        layout: './layout/mainLayout',
+        user: req.user,
+        page: churchRoute,
+        members: members[0],
+        member_homecell_id: id,
+        errEmail: req.flash('errEmail'),
+        errReason: req.flash('errReason'),
+        errmsg: req.flash('errmsg'),
+        sucmsg: req.flash('sucmsg'),
+        sucdel: req.flash('sucdel'),
+        homecell_leaders: homecell_leaders[0]
+    });
+}
+
 module.exports.add_homecell_post = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
