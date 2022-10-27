@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-user">
+            <div class="card-header">
+                <h5 class="card-title">Assign Homecell Leader</h5>
+            </div>
+            <div class="card-body">
+                <form action="/<%= page %>/add_homecell_leader" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="hidden" name="homecell_id" value="<%= member_homecell_id %>">
+                                
+                                <label>Members <%= members['name'] %> </label>
+                                <% if(!members.length > 0){ %>
+                                    <label style="color: cornflowerblue;">No Member</label>
+                                <% } %>
+                                <% if(errEmail){ %>
+                                    <label style="color: red;"><%= errEmail %></label>
+                                <% } %>
+                                <% if(sucmsg){ %>
+                                    <label style="color: green;"><%= sucmsg %></label>
+                                <% } %>
+                                <% if(errmsg){ %>
+                                    <label style="color: red;"><%= errmsg %></label>
+                                <% } %>
+                                <input list="members" class="form-control" name="email" placeholder="Email" value="<%=  %>">
+                                <datalist id="members">
+                                    <% if(members.length > 0){ %>
+                                        <% members.forEach(member => { %>
+                                            <option value="<%= member.email %>">
+                                        <% }) %>
+                                    <% } %>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="update ml-auto mr-auto">
+                            <button type="submit" class="btn btn-primary btn-round">assign</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Homecell Leaders</h4>
+                <% if(sucdel){ %>
+                    <label style="color: green;font-size: 20px;"><%= sucdel %></label>
+                <% } %>
+                <% if(errReason){ %>
+                    <label style="color: red;font-size: 20px;"><%= errReason %></label>
+                <% } %>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Date</th>
+                                <th>Remove</th>
+                                <th class="text-right">View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(homecell_leaders.length > 0){ %>
+                                <% homecell_leaders.forEach(leader => { %>
+                                    <tr>
+                                        <td><%= leader.last_name %> <%= leader.first_name %></td>
+                                        <td><%= leader.email %></td>
+                                        <td><%= leader.date %></td>
+                                        <td>
+                                            <form action="/<%= page %>/remove_homecell_leader/<%= member_homecell_id %>" method="post">
+                                                <input type="hidden" name="leader_id" value="<%= leader.id %>">
+                                                <input type="hidden" name="homecell_id" value="<%= member_homecell_id %>">
+                                                <input type="hidden" name="homecell_leader_email" value="<%= leader.email %>">
+                                                <a class="btn btn-danger btn-sm" onclick="popupBox()">remove</a>
+
+                                                <div class="popup-main">
+                                                    <div class="main-box">
+                                                        <div class="head bg-danger">
+                                                            <h3 class="ml-2 text-white">Remove <i class="nc-icon nc-alert-circle-i"></i></h3>
+                                                            <div class="close" onclick="popupBox()">
+                                                                <i class="nc-icon nc-simple-remove"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="bottom p-3">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="mt-1">Reason</label>
+                                                                        <textarea class="form-control textarea" name="reason"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-2">
+                                                                <div class="update ml-auto mr-auto">
+                                                                    <button class="btn btn-danger btn-sm">remove</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td class="text-right">
+                                            <a href="/<%= page %>/view/<%= leader.id %>" class="btn btn-success btn-sm">view</a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else{ %>
+                                <tr>
+                                    <td colspan="5">There is no Leader for this Homecell</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

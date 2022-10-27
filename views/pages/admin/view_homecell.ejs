@@ -148,3 +148,55 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Homecell Leaders</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Date</th>
+                                <th class="text-right">View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(homecell_leaders.length > 0){ %>
+                                <% homecell_leaders.forEach(leader => { %>
+                                    <tr>
+                                        <td><%= leader.last_name %> <%= leader.first_name %></td>
+                                        <td><%= leader.email %></td>
+                                        <td><%= leader.date %></td>
+                                        <td class="text-right">
+                                            <a href="/<%= page %>/view/<%= leader.id %>" class="btn btn-success btn-sm">view</a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else{ %>
+                                <tr>
+                                    <td colspan="4">There is no Leader for this Homecell</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td class="text-right">
+                                    <a href="/<%= page %>/add_homecell_leader/<%= homecells.id %>" class="btn btn-success btn-sm">add</a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
