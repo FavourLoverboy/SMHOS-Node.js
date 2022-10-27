@@ -23,6 +23,13 @@ router.post(`/${church}/add_homecell_leader`, checkLogin.checkAuthenticated, con
         .bail()
         .toLowerCase()
 ], (authController.add_homecell_leader_post));
+router.post(`/${church}/remove_homecell_leader/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
+    body('reason')
+        .trim()
+        .notEmpty().withMessage('Reason can\'t be empty')
+        .bail()
+        .toLowerCase()
+], (authController.remove_homecell_leader_post));
 
 router.get(`/${church}/add_homecell_leader/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.add_homecell_leader));
 
