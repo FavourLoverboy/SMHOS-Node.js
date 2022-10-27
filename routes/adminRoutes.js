@@ -73,6 +73,17 @@ router.get(`/${admin}/view_church/:id`, checkLogin.checkAuthenticated, controlli
 router.get(`/${admin}/homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.homecell));
 
 router.get(`/${admin}/add_homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.add_homecell));
+
+router.get(`/${admin}/add_homecell_leader/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.add_homecell_leader));
+// router.post(`/${admin}/add_homecell_leader`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
+//     body('email')
+//         .trim()
+//         .notEmpty().withMessage('Email can\'t be empty')
+//         .bail()
+//         .toLowerCase()
+// ], (authController.add_homecell_leader_post));
+
+
 router.post(`/${admin}/add_homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
     body('name')
         .trim()
