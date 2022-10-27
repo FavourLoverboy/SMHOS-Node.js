@@ -82,7 +82,13 @@ router.post(`/${admin}/add_homecell_leader`, checkLogin.checkAuthenticated, cont
         .bail()
         .toLowerCase()
 ], (authController.add_homecell_leader_post));
-
+router.post(`/${admin}/remove_homecell_leader/:id`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
+    body('reason')
+        .trim()
+        .notEmpty().withMessage('Reason can\'t be empty')
+        .bail()
+        .toLowerCase()
+], (authController.remove_homecell_leader_post));
 
 router.post(`/${admin}/add_homecell`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, [
     body('name')

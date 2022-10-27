@@ -357,6 +357,56 @@ module.exports.add_homecell_leader = async (req, res) => {
     });
 }
 
+module.exports.remove_homecell_leader_post = async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        errors.array().forEach(error => {
+            if(error.msg === 'Reason can\'t be empty'){
+                req.flash('errReason', error.msg);
+            }
+        });
+
+        let id = req.params.id;
+
+        let sql = "SELECT members.id, members.last_name, members.first_name, members.email, tbl_leaders.date FROM members INNER JOIN tbl_leaders ON members.id = tbl_leaders.user_id WHERE tbl_leaders.lead_id = ? AND status = '1'";
+        const homecell_leaders = await db.promise().query(sql, id);
+
+        let sql3 = "SELECT * FROM members WHERE email != '' AND homecell_id = ? ORDER BY last_name";
+        const members = await db.promise().query(sql3, id);
+        
+        res.render(`${pages}/${admin}/add_homecell_leader`, {
+            title: `Assign Homecell Leader | ${title}`, 
+            layout: './layout/mainLayout',
+            user: req.user,
+            page: admin,
+            members: members[0],
+            member_homecell_id: id,
+            errEmail: req.flash('errEmail'),
+            errReason: req.flash('errReason'),
+            errmsg: req.flash('errmsg'),
+            sucmsg: req.flash('sucmsg'),
+            sucdel: req.flash('sucdel'),
+            homecell_leaders: homecell_leaders[0]
+        });
+        return;
+    }
+
+    try{
+        var { leader_id, homecell_id, homecell_leader_email, reason } = req.body;
+        
+        let sql = `UPDATE tbl_leaders SET reason = ?, status = '0' WHERE user_id = ${leader_id} AND lead_id = ${homecell_id} AND type = 'H'`;
+        const members = await db.promise().query(sql, reason);
+        
+        let sql2 = `DELETE FROM tbl_login WHERE email = '${homecell_leader_email}' AND homecell_id = ${homecell_id} AND level = 'L'`;
+        const remove = await db.promise().query(sql2);
+
+        req.flash('sucdel', 'homecell leader remove successfully');
+        res.redirect(`/${admin}/add_homecell_leader/${homecell_id}`);
+    } catch(e) {
+        console.log(e);
+    }
+}
+
 module.exports.add_homecell_leader_post = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -417,8 +467,8 @@ module.exports.add_homecell_leader_post = async (req, res) => {
             const tbl_login_values = {
                 email: details.email,
                 password: details.password,
-                church_id: details.homecell_id,
-                homecell_id: '0',
+                church_id: 0,
+                homecell_id: details.homecell_id,
                 level: 'L',
                 status: '1',
             }
