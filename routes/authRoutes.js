@@ -8,7 +8,7 @@ const router = Router();
 // Check user level
 router.get('/check', checkLogin.checkAuthenticated, (authController.check));
 
-// login
+// Member login
 router.get('/', checkLogin.checkNotAuthenticated, (authController.login_get));
 router.get('/login', checkLogin.checkNotAuthenticated, (authController.login_get));
 router.post('/', [
@@ -27,6 +27,6 @@ router.post('/', [
 
 router.post('/logout', (authController.logout));
 
-// router.use('*', (authController.page_404));
+router.use('*', (authController.page_404));
 
 module.exports = router;

@@ -8,7 +8,7 @@ const router = Router();
 const member = process.env.MEMBER;
 
 // member
-router.get(`/${member}/dashboard`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.member_dashboard));
+router.get(`/${member}/dashboard`, checkLogin.checkAuthenticated, (authController.member_dashboard));
 
 router.get(`/${member}/profile`, checkLogin.checkAuthenticated, controllingUserAccess.userAccess, (authController.member_profile));
 

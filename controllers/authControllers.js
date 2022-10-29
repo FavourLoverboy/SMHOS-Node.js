@@ -13,7 +13,7 @@ const title = process.env.TITLE;
 
 initializePassport(passport);
 
-// login get
+// Member login get
 module.exports.login_get = (req, res) => {
     res.render('auth/login', {
         title: `Login | ${title}`,
@@ -23,8 +23,7 @@ module.exports.login_get = (req, res) => {
         errPassword: req.flash('errPassword')
     });
 }
-
-// login post
+// Member login post
 module.exports.login_post = passport.authenticate('local', {
     successRedirect: '/check',
     failureRedirect: '/',
@@ -40,24 +39,24 @@ module.exports.logout = ((req, res, next) => {
 });
 
 // 404 page
-// module.exports.page_404 = (req, res) => {
-//     res.render('auth/404', {
-//         title: `404 | ${title}`,
-//         layout: './layout/loginLayout',
-//     })
-// } 
+module.exports.page_404 = (req, res) => {
+    res.render('auth/404', {
+        title: `404 | ${title}`,
+        layout: './layout/loginLayout',
+    })
+} 
 
 // check user rank (level)
 module.exports.check = (req, res) => {
     const user = req.user;
-
+    
     if(user.level == 'A'){
         res.redirect(`/${admin}/dashboard`);
     }else if(user.level == 'C'){
         res.redirect(`/${church}/dashboard`);
     }else if(user.level == 'L'){
         res.redirect(`/${leader}/dashboard`);
-    }else if(user.level == 'M'){
-        res.redirect(`/${member}/dashboard`);;
+    }else{
+        res.redirect(`/${member}/dashboard`);
     }
 }
