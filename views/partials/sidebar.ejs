@@ -15,7 +15,7 @@
                 <%- include('levels/church'); -%>
             <% }else if(user.level == 'L') { %>
                 <%- include('levels/leader'); -%>
-            <% }else if(user.level == 'M') { %>
+            <% }else { %>
                 <%- include('levels/member'); -%>
             <% } %>            
         </ul>

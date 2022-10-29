@@ -28,7 +28,7 @@ module.exports.userAccess = (req, res, next) => {
         }
         return next();
     }
-    else if(user == 'M'){
+    else{
         if(url != 'm'){
             res.redirect(`/${member}/dashboard`);
         }
