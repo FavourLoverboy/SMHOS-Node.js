@@ -47,9 +47,11 @@ module.exports.page_404 = (req, res) => {
 } 
 
 // check user rank (level)
-module.exports.check = (req, res) => {
+module.exports.check = async (req, res) => {
     const user = req.user;
-    
+    let sql = `UPDATE members SET login = NOW() WHERE password = '${user.password}'`;
+    const update = await db.promise().query(sql);
+
     if(user.level == 'A'){
         res.redirect(`/${admin}/dashboard`);
     }else if(user.level == 'C'){
