@@ -79,7 +79,11 @@
                             </div>
                         </div>
                         <div class="col-md-7 col-7">
-                            <%= homecell.name %><br />
+                            <% if(homecell){ %>
+                                <%= homecell.name %><br />
+                            <% }else{ %>
+                                No Homecell<br />
+                            <% } %>
                             <span class="text-success"><small>Homecell</small></span>
                         </div>
                         <div class="col-md-3 col-3 text-right">
@@ -95,7 +99,11 @@
                             </div>
                         </div>
                         <div class="col-ms-7 col-7">
-                            <%= church.name %><br />
+                            <% if(church){ %>
+                                <%= church.name %><br />
+                            <% }else{ %>
+                                No Church<br />
+                            <% } %>
                             <span class="text-danger"><small>Branch</small></span>
                         </div>
                         <div class="col-md-3 col-3 text-right">
