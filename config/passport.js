@@ -52,7 +52,6 @@ function initialize(passport){
                 const sql11 = 'SELECT * FROM members WHERE email = ?';
                 const result12 = await db.promise().query(sql11, email);
                 if(result12[0][0]){
-                    console.log('i got you');
                     done(null, result12[0][0]);
                 }
             }else{
